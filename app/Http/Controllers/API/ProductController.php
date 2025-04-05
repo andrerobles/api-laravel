@@ -30,9 +30,9 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255',
-            'description' => 'required',
-            'price' => 'required',
-            'total' => 'required',
+            'description' => 'nullable|string',
+            'price' => 'required|decimal:0,2',
+            'total' => 'required|integer'
         ]);
 
         return $this->repository->store(
@@ -52,9 +52,9 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255',
-            'description' => 'required',
-            'price' => 'required',
-            'total' => 'required'
+            'description' => 'nullable|string',
+            'price' => 'required|decimal:0,2',
+            'total' => 'required|integer'
         ]);
 
         return $this->repository->update(
