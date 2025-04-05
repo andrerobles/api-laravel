@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,13 +18,5 @@ Route::get('/test', function () {
 // Rotas protegidas
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/me', [AuthController::class, 'me']);
-    
-    Route::post('/data', function (Request $request) {
-        return response()->json([
-            'message' => 'Data received',
-            'data' => $request->all(),
-            'user' => $request->user()
-        ]);
-    });
+    Route::resource('products', App\Http\Controllers\API\ProductController::class);
 });
