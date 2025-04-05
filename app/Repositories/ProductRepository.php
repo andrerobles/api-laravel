@@ -57,7 +57,9 @@ class ProductRepository implements ProductRepositoryInterface
         $product = $this->model->findOrFail($id);
         $product->delete();
 
-        return response()->json($product::all());
+        return response()->json([
+            'message' => 'Product deleted successfully'
+        ], 200);
     }
 }
 
