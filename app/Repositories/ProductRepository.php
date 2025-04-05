@@ -15,9 +15,11 @@ class ProductRepository implements ProductRepositoryInterface
         $this->model = $model;
     }
 
-    public function index()
+    public function index($itemsPerPage, $sortBy, $direction)
     {
-        $products = $this->model->all();
+        $products = $this->model
+                         ->orderBy($sortBy, $direction)
+                         ->paginate($itemsPerPage);
         return response()->json($products);
     }
 

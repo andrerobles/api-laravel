@@ -17,9 +17,13 @@ class ProductController extends Controller
         $this->repository = $repository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->repository->index();
+        $itemsPerPage = $request->has('items_per_page') ? (int) $request->input('items_per_page') : 15;
+        $sortBy = $request->has('sort_by') ? $request->input('sort_by') : 'name';
+        $direction = $request->has('direction') ? $request->input('direction') : 'desc';
+
+        return $this->repository->index($itemsPerPage, $sortBy, $direction);
     }
 
     public function store(Request $request)
