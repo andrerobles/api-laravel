@@ -9,60 +9,88 @@ Este projeto utiliza Docker para configurar um ambiente para execução de proje
 
 ### Estrutura
 
--   `docker-compose.yml`: Define a configuração dos containers Php/Laravel, Mysql e Phpmyadmin.
+`docker-compose.yml` e `Dockerfile`: Define a configuração dos containers Php/Laravel, Mysql e Phpmyadmin.
 
 ### 🚀 Instalação / Configuração
 
 Copiar o arquivo `.env.example` para `.env` e realizar alterações, caso necessário.
 
-Os arquivos `.sql` contendo as informações de dados devem ser solicitados a parte, eles são: `init.sql`, `data.sql`, `procedure.sql`, `translate.sql` e movidos para a pasta `docker`.
+#### Execute os seguintes comandos em ordem:
 
-Entre no diretório `docker` e execute o comando para a criação do container:
+#### Criação do container Php/Laravel, MySQL e PhpAdmin
 
-```
+```bash
 docker-compose up -d
 ```
 
-Para verificar se o container está em execução:
+#### Entrar no container
 
-```
-docker ps
-```
-
-Comando para entrar no container e instalar dependencias (Passo 1):
-
-```
+```bash
 docker exec -it laravel_app bash
 ```
 
-Instalar de dependencias no container (Passo 2):
+#### Instalar dependências do Laravel
 
-```
+```bash
 composer install
 ```
 
-```
+#### Instalar dependências do Nodejs
+
+```bash
 npm install
 ```
 
-```
+#### Gerar Chave da aplicação
+
+```bash
 php artisan key:generate
 ```
 
-```
+#### Criar estrutura base de migrações
+
+```bash
 php artisan migrate:install
 ```
 
-```
+#### Criar estrutura tabelas
+
+```bash
 php artisan migrate
+```
+
+#### Adicionar dados de usuário (login) e produtos
+
+```bash
+php artisan db:seed
 ```
 
 ### 📝 Credencial:
 
--   Informação contida no arquivo `.env`
+-   Usuário padrão:
+    -   email: admin@corp.com
+    -   password: admin
 
 ### 🚪 Portas:
 
 -   API: 80
 -   MYSQL: 3306
--   Phpmyadmin: 8000
+-   Phpmyadmin: 8080
+
+### Execução
+
+Foi adicionado o diretório `http`, que contem o consumo dos end-points.
+
+Caso esteja utilizando o **VSCode** e tiver a extensão **Rest Client**, poderá executar os end-points diretamente por aqui.
+
+Em seguida vou destacar os principais mas todos os endpoints podem ser conferidos em `http`:
+
+**POST http://localhost:80/api/login (Login)**: Obtem token para ser utilizado nas consultas.
+
+**GET http://localhost:80/api/products?page=5&items_per_page=30 (Lista Produtos)**: Lista produtos de forma paginada
+
+**Importante**: É preciso passar o **token** obtido pelo end-point de login no `Authorization`.
+
+Ex:
+
+`Authorization: Bearer TOKEN_OBTIDO`

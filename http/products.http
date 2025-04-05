@@ -3,7 +3,7 @@ GET http://localhost:80/api/products
 Content-Type: application/json
 Authorization: Bearer 6|NXeHN04agxwz4TF26SH0FyOMyiMipB4AQjHV6dVm09295f54
 
-### Get all products with paginate parameters default
+### Get all products passing paginate parameters
 GET http://localhost:80/api/products?page=5&items_per_page=30
 Content-Type: application/json
 Authorization: Bearer 6|NXeHN04agxwz4TF26SH0FyOMyiMipB4AQjHV6dVm09295f54
